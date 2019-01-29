@@ -1,0 +1,26 @@
+body,
+html {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+.homeCarousel {
+    width: 100%;
+    display: block;
+    height: 100vh;
+    background: #7a016a;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    background: #7a016a;
+    color: #fff;
+}

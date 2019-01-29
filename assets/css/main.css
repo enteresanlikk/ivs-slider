@@ -1,0 +1,34 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.homeCarousel {
+  width: 100%;
+  display: block;
+  height: 100vh;
+  background: #7a016a;
+}
+
+.item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 5rem;
+  background: #7a016a;
+  color: #fff;
+}
+/*# sourceMappingURL=main.css.map */

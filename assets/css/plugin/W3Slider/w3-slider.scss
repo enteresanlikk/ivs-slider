@@ -1,0 +1,88 @@
+.w3-slider {
+    position: relative;
+    z-index: 1;
+    * {
+        outline: 0;
+    }
+    .w3-container {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        .w3-row {
+            height: 100%;
+            width: 7680px;
+            transform: translate3d(0px, 0px, 0px);
+            div {
+                width: 1920px;
+                height: 100%;
+                position: relative;
+                float: left;
+            }
+        }
+        .w3-nav {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: auto;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            button {
+                background: transparent;
+                color: #fff;
+                border: 0;
+                cursor: pointer;
+                padding: 10px;
+                font-size: 1rem;
+                border-radius: 5px;
+                &:hover,
+                &:disabled {
+                    &::before {
+                        color: rgba(255, 255, 255, 0.6);
+                    }
+                }
+                &::before {
+                    font-family: "Font Awesome 5 Free"; font-weight: 900;
+                    font-size: 4em;
+                    font-weight: 600;
+                }
+                &.prev {
+                    &:before {
+                        content: '\f053';
+                    }
+                }
+                &.next {
+                    &:before {
+                        content: '\f054';
+                    }
+                }
+            }
+        }
+        .w3-dots {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100%;
+            height: auto;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            button {
+                margin: 3px;
+                width: 15px;
+                height: 15px;
+                border: 0;
+                background: #fff;
+                border-radius: 50%;
+                cursor: pointer;
+                &.active {
+                    background: #ffb800;
+                }
+            }
+        }
+    }
+}
