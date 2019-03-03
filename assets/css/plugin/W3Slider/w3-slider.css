@@ -1,6 +1,7 @@
 .w3-slider {
   position: relative;
   z-index: 1;
+  background: #fff;
 }
 
 .w3-slider * {
@@ -16,7 +17,6 @@
 
 .w3-slider .w3-container .w3-row {
   height: 100%;
-  width: 7680px;
   -webkit-transform: translate3d(0px, 0px, 0px);
           transform: translate3d(0px, 0px, 0px);
 }
@@ -45,18 +45,42 @@
           justify-content: space-between;
 }
 
+.w3-slider .w3-container .w3-nav.vertical {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+  padding: 0;
+}
+
+.w3-slider .w3-container .w3-nav.vertical button {
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
 .w3-slider .w3-container .w3-nav button {
   background: transparent;
-  color: #fff;
+  color: #3498db;
   border: 0;
   cursor: pointer;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 0.8em;
   border-radius: 5px;
 }
 
 .w3-slider .w3-container .w3-nav button:hover::before, .w3-slider .w3-container .w3-nav button:disabled::before {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(52, 152, 219, 0.6);
+}
+
+.w3-slider .w3-container .w3-nav button:disabled {
+  cursor: no-drop;
 }
 
 .w3-slider .w3-container .w3-nav button::before {
@@ -83,25 +107,85 @@
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   padding: 10px 20px;
+}
+
+.w3-slider .w3-container .w3-dots.vertical {
+  top: 0;
+  right: 0;
+  width: auto;
+  height: 100%;
+  -webkit-transform: unset;
+          transform: unset;
+  left: unset;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.w3-slider .w3-container .w3-dots button {
+.w3-slider .w3-container .w3-dots.vertical .w3-dots-container {
+  display: inline;
+}
+
+.w3-slider .w3-container .w3-dots.vertical .w3-dots-container button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.w3-slider .w3-container .w3-dots .w3-dots-container {
+  width: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.w3-slider .w3-container .w3-dots .w3-dots-container button {
   margin: 3px;
-  width: 15px;
-  height: 15px;
+  width: 25px;
+  height: 25px;
   border: 0;
-  background: #fff;
+  background: #ccc;
   border-radius: 50%;
   cursor: pointer;
+  padding: 5px;
+  -webkit-transition: .3s;
+  transition: .3s;
 }
 
-.w3-slider .w3-container .w3-dots button.active {
-  background: #ffb800;
+.w3-slider .w3-container .w3-dots .w3-dots-container button:empty {
+  width: 20px;
+  height: 20px;
+}
+
+.w3-slider .w3-container .w3-dots .w3-dots-container button.active, .w3-slider .w3-container .w3-dots .w3-dots-container button:hover {
+  background: #3498db;
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .w3-slider .w3-container .w3-nav button {
+    font-size: 0.7em;
+  }
 }
 /*# sourceMappingURL=w3-slider.css.map */

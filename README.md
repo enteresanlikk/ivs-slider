@@ -1,1 +1,1 @@
-# w3-slider
+# W3 Slider

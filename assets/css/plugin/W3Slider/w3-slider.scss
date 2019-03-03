@@ -1,6 +1,41 @@
+$primary: #3498db;
+$primaryDisabled: rgba(52,152,219, 0.6);
+$white: #fff;
+$white3: #ccc;
+
+//break points
+@mixin breakpoint($point) {
+    @if $point==xs {
+        @media (max-width: 767px) {
+            @content ;
+        }
+    }
+    @if $point==xssm {
+        @media (max-width: 1023px) {
+            @content ;
+        }
+    }    
+    @else if $point==sm {
+        @media (min-width: 768px) and (max-width: 1023px) {
+            @content ;
+        }
+    }
+    @else if $point==md {
+        @media (min-width: 1024px) and (max-width: 1399px) {
+            @content ;
+        }
+    }
+    @else if $point==lg {
+        @media (min-width: 1400px) {
+            @content ;
+        }
+    }
+}
+
 .w3-slider {
     position: relative;
     z-index: 1;
+    background: $white;
     * {
         outline: 0;
     }
@@ -11,7 +46,6 @@
         overflow: hidden;
         .w3-row {
             height: 100%;
-            width: 7680px;
             transform: translate3d(0px, 0px, 0px);
             div {
                 width: 1920px;
@@ -30,19 +64,35 @@
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
+            &.vertical {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                flex-direction: column;
+                height: 100%;
+                width: auto;
+                transform: translate(-50%, 0);
+                padding: 0;
+                button {
+                    transform: rotate(90deg);
+                }
+            }
             button {
                 background: transparent;
-                color: #fff;
+                color: $primary;
                 border: 0;
                 cursor: pointer;
                 padding: 10px;
-                font-size: 1rem;
+                font-size: 0.8em;
                 border-radius: 5px;
                 &:hover,
                 &:disabled {
                     &::before {
-                        color: rgba(255, 255, 255, 0.6);
+                        color: $primaryDisabled;
                     }
+                }
+                &:disabled {
+                    cursor: no-drop;
                 }
                 &::before {
                     font-family: "Font Awesome 5 Free"; font-weight: 900;
@@ -69,18 +119,63 @@
             height: auto;
             transform: translateX(-50%);
             padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            button {
-                margin: 3px;
-                width: 15px;
-                height: 15px;
-                border: 0;
-                background: #fff;
-                border-radius: 50%;
-                cursor: pointer;
-                &.active {
-                    background: #ffb800;
+            &.vertical {
+                top: 0;
+                right: 0;
+                width: auto;
+                height: 100%;
+                transform: unset;
+                left: unset;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .w3-dots-container {
+                    display: inline;
+                    button {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+            .w3-dots-container {
+                width: 100%;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+                button {
+                    margin: 3px;
+                    width: 25px;
+                    height: 25px;
+                    border: 0;
+                    background: $white3;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    padding: 5px;
+                    transition: .3s;
+                    &:empty {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    &.active,
+                    &:hover {
+                        background: $primary;
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include breakpoint(xs) {
+    .w3-slider {
+        .w3-container {
+            .w3-nav {
+                button {
+                    font-size: 0.7em;
                 }
             }
         }
