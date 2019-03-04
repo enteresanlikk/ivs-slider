@@ -97,7 +97,7 @@ function setNav() {
         slide('next', true);
     });
 
-    document.querySelector('.'+DOM.container).append(w3NavContainer);
+    _.querySelector('.'+DOM.container).append(w3NavContainer);
 }
 
 function getActiveSlide() {
@@ -159,7 +159,7 @@ function setDots() {
         w3DotsContainer.appendChild(dotsButton);
     }
     w3Dots.appendChild(w3DotsContainer);
-    document.querySelector('.'+DOM.container).append(w3Dots);
+    _.querySelector('.'+DOM.container).append(w3Dots);
 
     var dots = _.querySelectorAll('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.dot);
     for(var i=0; i<dots.length; i++) {
@@ -175,13 +175,16 @@ function setDot(index) {
     if(_.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active)) {
         _.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active).classList.remove(DOM.active);
     }
-
+    
     _.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children[index].classList.add(DOM.active);
+    
 }
 
 function setW3Elems() {
     //Slider özelleştirilmeden önce içerik kopyalanıyor
     sliders = _.cloneNode(true);
+
+    _.classList.add(DOM.slider);
 
     //Slider için gerekli olan kısımlar ekleniyor
     _.innerHTML = '';
@@ -297,10 +300,10 @@ function setSlideAction(index) {
 }
 
 function setSizes() {
-    var row = _.querySelector('.'+DOM.row);
+    var row = _.querySelector('.'+DOM.container+' .'+DOM.row);
     var childs = row.children;
-    var width = (window.innerWidth+(argsObject.spaceBetween))/argsObject.slidesPerView;
-    var height = (window.innerHeight+(argsObject.spaceBetween))/argsObject.slidesPerView;
+    var width = (_.clientWidth+(argsObject.spaceBetween))/argsObject.slidesPerView;
+    var height = (_.clientHeight+(argsObject.spaceBetween))/argsObject.slidesPerView;
     
     if(argsObject.direction == 'v') {
         row.style.height = (height*allSliderCount)+"px";
@@ -327,10 +330,10 @@ function setSizes() {
 
         if(argsObject.direction == 'v') {
             slide.style.height = height-argsObject.spaceBetween+'px';
-            slide.style.width = window.innerWidth+'px';
+            slide.style.width = _.clientWidth+'px';
         } else {
             slide.style.width = width-argsObject.spaceBetween+'px';
-            slide.style.height = window.innerHeight+'px';
+            slide.style.height = _.clientHeight+'px';
         }
     }
     var activeSlide = getActiveSlide();
