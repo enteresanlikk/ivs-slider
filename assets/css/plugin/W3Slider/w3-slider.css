@@ -21,8 +21,8 @@
           transform: translate3d(0px, 0px, 0px);
 }
 
-.w3-slider .w3-container .w3-row div {
-  width: 1920px;
+.w3-slider .w3-container .w3-row div,
+.w3-slider .w3-container .w3-row .w3-slide {
   height: 100%;
   position: relative;
   float: left;

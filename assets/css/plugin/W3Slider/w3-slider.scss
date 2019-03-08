@@ -47,8 +47,8 @@ $white3: #ccc;
         .w3-row {
             height: 100%;
             transform: translate3d(0px, 0px, 0px);
-            div {
-                width: 1920px;
+            div,
+            .w3-slide {
                 height: 100%;
                 position: relative;
                 float: left;
