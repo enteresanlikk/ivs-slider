@@ -3,58 +3,29 @@ $primaryDisabled: rgba(52,152,219, 0.6);
 $white: #fff;
 $white3: #ccc;
 
-//break points
-@mixin breakpoint($point) {
-    @if $point==xs {
-        @media (max-width: 767px) {
-            @content ;
-        }
-    }
-    @if $point==xssm {
-        @media (max-width: 1023px) {
-            @content ;
-        }
-    }    
-    @else if $point==sm {
-        @media (min-width: 768px) and (max-width: 1023px) {
-            @content ;
-        }
-    }
-    @else if $point==md {
-        @media (min-width: 1024px) and (max-width: 1399px) {
-            @content ;
-        }
-    }
-    @else if $point==lg {
-        @media (min-width: 1400px) {
-            @content ;
-        }
-    }
-}
-
-.w3-slider {
+.ivs-slider {
     position: relative;
     z-index: 1;
     background: $white;
     * {
         outline: 0;
     }
-    .w3-container {
+    .ivs-container {
         height: 100%;
         width: 100%;
         position: relative;
         overflow: hidden;
-        .w3-row {
+        .ivs-row {
             height: 100%;
             transform: translate3d(0px, 0px, 0px);
             div,
-            .w3-slide {
+            .ivs-slide {
                 height: 100%;
                 position: relative;
                 float: left;
             }
         }
-        .w3-nav {
+        .ivs-nav {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -64,7 +35,7 @@ $white3: #ccc;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
-            &.vertical {
+            &.ivs-vertical {
                 position: absolute;
                 top: 0;
                 left: 50%;
@@ -99,19 +70,19 @@ $white3: #ccc;
                     font-size: 4em;
                     font-weight: 600;
                 }
-                &.prev {
+                &.ivs-prev {
                     &:before {
                         content: '\f053';
                     }
                 }
-                &.next {
+                &.ivs-next {
                     &:before {
                         content: '\f054';
                     }
                 }
             }
         }
-        .w3-dots {
+        .ivs-dots {
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -119,7 +90,7 @@ $white3: #ccc;
             height: auto;
             transform: translateX(-50%);
             padding: 10px 20px;
-            &.vertical {
+            &.ivs-vertical {
                 top: 0;
                 right: 0;
                 width: auto;
@@ -129,7 +100,7 @@ $white3: #ccc;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                .w3-dots-container {
+                .ivs-dots-container {
                     display: inline;
                     button {
                         display: flex;
@@ -138,7 +109,7 @@ $white3: #ccc;
                     }
                 }
             }
-            .w3-dots-container {
+            .ivs-dots-container {
                 width: 100%;
                 position: relative;
                 display: flex;
@@ -159,7 +130,7 @@ $white3: #ccc;
                         width: 20px;
                         height: 20px;
                     }
-                    &.active,
+                    &.ivs-active,
                     &:hover {
                         background: $primary;
                         color: $white;
@@ -170,10 +141,10 @@ $white3: #ccc;
     }
 }
 
-@include breakpoint(xs) {
-    .w3-slider {
-        .w3-container {
-            .w3-nav {
+@media (max-width: 767px) {
+    .ivs-slider {
+        .ivs-container {
+            .ivs-nav {
                 button {
                     font-size: 0.7em;
                 }

@@ -6,7 +6,7 @@ var defaultArgsObject = {
     nav: 1,
     dots: 1,
     activeSlide: 1,
-    transition: 1,
+    transition: '1s',
 
     rtl: 0,
     spaceBetween: 0,
@@ -24,27 +24,27 @@ var defaultArgsObject = {
 var sliderObject = [];
 
 var DOM = {
-    slider: 'w3-slider',
-    container: 'w3-container',
-    row: 'w3-row',
-    rowSlide: 'w3-slide',
-    nav: 'w3-nav',
-    navNext: 'next',
-    navPrev: 'prev',
-    dots: 'w3-dots',
-    dotsContainer: 'w3-dots-container',
-    dot: 'dot',
-    active: 'active',
-    vertical: 'vertical'
+    slider: 'ivs-slider',
+    container: 'ivs-container',
+    row: 'ivs-row',
+    rowSlide: 'ivs-slide',
+    nav: 'ivs-nav',
+    navNext: 'ivs-next',
+    navPrev: 'ivs-prev',
+    dots: 'ivs-dots',
+    dotsContainer: 'ivs-dots-container',
+    dot: 'ivs-dot',
+    active: 'ivs-active',
+    vertical: 'ivs-vertical'
 };
 
-var W3Slider = function(elStr, args) {
+var IVSSlider = function(elStr, args) {
     var el = document.querySelector(elStr);
 
     setArgs(elStr, args);
     var slideObj = sliderObject[elStr];
 
-    var sliders = setW3Elems(elStr);
+    var sliders = setIVSElems(elStr);
     var sliderArgs = {
         slider: {
             allCount: sliders.childElementCount,
@@ -85,32 +85,32 @@ function resizeSlider(elStr) {
 }
 
 function setArgs(elStr, args) {
-    sliderObject[elStr] = (Object.assign({}, defaultArgsObject, args));
+    sliderObject[elStr] = Object.assign({}, defaultArgsObject, args);
 }
 
 function setNav(elStr) {
-    var w3NavContainer = document.createElement('div');
-    w3NavContainer.classList.add(DOM.nav);
+    var ivsNavContainer = document.createElement('div');
+    ivsNavContainer.classList.add(DOM.nav);
 
     if (sliderObject[elStr].direction == 'v') {
-        w3NavContainer.classList.add(DOM.vertical);
+        ivsNavContainer.classList.add(DOM.vertical);
     }
 
     var prevButton = document.createElement('button');
     prevButton.classList.add(DOM.navPrev);
-    w3NavContainer.appendChild(prevButton);
+    ivsNavContainer.appendChild(prevButton);
     prevButton.addEventListener('click', function(e) {
         slide('prev', true, elStr);
     });
 
     var nextButton = document.createElement('button');
     nextButton.classList.add(DOM.navNext);
-    w3NavContainer.appendChild(nextButton);
+    ivsNavContainer.appendChild(nextButton);
     nextButton.addEventListener('click', function(e) {
         slide('next', true, elStr);
     });
 
-    document.querySelector(elStr).querySelector('.'+DOM.container).append(w3NavContainer);
+    document.querySelector(elStr).querySelector('.'+DOM.container).append(ivsNavContainer);
 }
 
 function getActiveSlide(elStr) {
@@ -157,14 +157,14 @@ function slide(type = 'next', isButton = false, elStr) {
 function setDots(elStr) {
     var el = document.querySelector(elStr);
     var slideObj = sliderObject[elStr];
-    var w3Dots = document.createElement('div');
-    w3Dots.classList.add(DOM.dots);
+    var ivsDots = document.createElement('div');
+    ivsDots.classList.add(DOM.dots);
     if (slideObj.direction == 'v') {
-        w3Dots.classList.add(DOM.vertical);
+        ivsDots.classList.add(DOM.vertical);
     }
 
-    var w3DotsContainer = document.createElement('div');
-    w3DotsContainer.classList.add(DOM.dotsContainer);
+    var ivsDotsContainer = document.createElement('div');
+    ivsDotsContainer.classList.add(DOM.dotsContainer);
 
     for(var i=0; i<slideObj.slider.count; i++) {
         var dotsButton = document.createElement('button');
@@ -173,10 +173,10 @@ function setDots(elStr) {
             dotsButton.innerText = (slideObj.rtl ? (slideObj.slider.count-i) : (i+1));
         }
 
-        w3DotsContainer.appendChild(dotsButton);
+        ivsDotsContainer.appendChild(dotsButton);
     }
-    w3Dots.appendChild(w3DotsContainer);
-    el.querySelector('.'+DOM.container).append(w3Dots);
+    ivsDots.appendChild(ivsDotsContainer);
+    el.querySelector('.'+DOM.container).append(ivsDots);
 
     var dots = el.querySelectorAll('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.dot);
     for(var i=0; i<dots.length; i++) {
@@ -197,7 +197,7 @@ function setDot(index, elStr) {
     el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children[index].classList.add(DOM.active);
 }
 
-function setW3Elems(elStr) {
+function setIVSElems(elStr) {
     var el = document.querySelector(elStr);
     var slideObj = sliderObject[elStr];
     //Slider özelleştirilmeden önce içerik kopyalanıyor
@@ -211,20 +211,20 @@ function setW3Elems(elStr) {
 
     //Slider için gerekli olan kısımlar ekleniyor
     el.innerHTML = '';
-    var w3Container = document.createElement('div');
-    w3Container.classList.add(DOM.container);
-    el.appendChild(w3Container);
+    var ivsContainer = document.createElement('div');
+    ivsContainer.classList.add(DOM.container);
+    el.appendChild(ivsContainer);
 
-    var w3Row = document.createElement('div');
-    w3Row.classList.add(DOM.row);
+    var ivsRow = document.createElement('div');
+    ivsRow.classList.add(DOM.row);
 
     setTimeout(()=> {
-        w3Row.style.transition = slideObj.transition+'s';
+        ivsRow.style.transition = slideObj.transition;
     },100);
     
-    w3Container.appendChild(w3Row);
+    ivsContainer.appendChild(ivsRow);
 
-    w3Row.innerHTML = sliders.innerHTML;
+    ivsRow.innerHTML = sliders.innerHTML;
     return sliders;
 }
 
@@ -256,15 +256,21 @@ function setActiveSlide(elStr) {
 function setSlide(index, elStr) {
     var slideObj = sliderObject[elStr];
     var el = document.querySelector(elStr);
-    if(el.querySelector('.'+DOM.container+' .'+DOM.row+' .'+DOM.active)) {
-        el.querySelector('.'+DOM.container+' .'+DOM.row+' .'+DOM.active).classList.remove(DOM.active);
+    var activeSlides = el.querySelectorAll('.'+DOM.container+' .'+DOM.row+' .'+DOM.active);
+    for(var i=0; i<activeSlides.length; i++) {
+        var aEl = activeSlides[i];
+        aEl.classList.remove(DOM.active);
     }
 
     if(slideObj.dots && slideObj.slider.count > 1) {
         setDot(index, elStr);
     }
-
-    el.querySelector('.'+DOM.container+' .'+DOM.row).children[index].classList.add(DOM.active);
+    
+    for(var i=index*slideObj.slidesPerView; i<(index*slideObj.slidesPerView)+slideObj.slidesPerView; i++) {i
+        if(el.querySelector('.'+DOM.container+' .'+DOM.row).children[i]) {
+            el.querySelector('.'+DOM.container+' .'+DOM.row).children[i].classList.add(DOM.active);
+        }
+    }
     setSlideAction(index, elStr);
 
     if(!slideObj.loop) {

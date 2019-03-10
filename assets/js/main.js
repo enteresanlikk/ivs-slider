@@ -1,13 +1,14 @@
 (function() {
 
-    W3Slider('#homeCarousel', {
-        timeout: 5,
-        nav: 0
+    IVSSlider('#homeCarousel', {
+        slidesPerView: 3,
+        spaceBetween: 10
     });
     
-    W3Slider('#homeCarousel2', {
+    IVSSlider('#homeCarousel2', {
         activeSlide: 2,
-        dots: 0
+        dots: 0,
+        autoplay: 0
     });
 
 })();
