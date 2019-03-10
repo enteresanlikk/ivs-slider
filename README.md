@@ -1,7 +1,11 @@
 # W3 Slider
 
-## Option Params
+## Using
+    IVSSlider('#foo', {
+        ...params
+    });
 
+## Option Params
 |Param|Type|Values|Default|
 |-|-|-|-|
 loop|Boolean|(true or false) or (0 or 1)|1
