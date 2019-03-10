@@ -1,5 +1,3 @@
-# W3 Slider
-
 ## Using
     IVSSlider('#foo', {
         ...params
