@@ -6,9 +6,7 @@
     });
     
     IVSSlider('#homeCarousel2', {
-        activeSlide: 2,
-        dots: 0,
-        autoplay: 0
+        dynamicDOM: 0
     });
 
 })();

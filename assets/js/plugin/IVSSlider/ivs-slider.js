@@ -13,6 +13,7 @@ var defaultArgsObject = {
     slidesPerView: 1,
     dotNumber: 1,
     direction: 'h',
+    dynamicDOM: true,
 
     slider: {
         allCount: 0,
@@ -89,28 +90,37 @@ function setArgs(elStr, args) {
 }
 
 function setNav(elStr) {
-    var ivsNavContainer = document.createElement('div');
-    ivsNavContainer.classList.add(DOM.nav);
-
-    if (sliderObject[elStr].direction == 'v') {
-        ivsNavContainer.classList.add(DOM.vertical);
+    var el = document.querySelector(elStr);
+    var slideObj = sliderObject[elStr];
+    var ivsNavContainer;
+    if(slideObj.dynamicDOM) {
+        ivsNavContainer = document.createElement('div');
+        ivsNavContainer.classList.add(DOM.nav);
+    } else if(el.querySelector(`.${DOM.container} .${DOM.nav}`)) {
+        ivsNavContainer = el.querySelector(`.${DOM.container} .${DOM.nav}`);
     }
 
-    var prevButton = document.createElement('button');
-    prevButton.classList.add(DOM.navPrev);
-    ivsNavContainer.appendChild(prevButton);
-    prevButton.addEventListener('click', function(e) {
-        slide('prev', true, elStr);
-    });
+    if(ivsNavContainer) {
+        if (slideObj.direction == 'v') {
+            ivsNavContainer.classList.add(DOM.vertical);
+        }
 
-    var nextButton = document.createElement('button');
-    nextButton.classList.add(DOM.navNext);
-    ivsNavContainer.appendChild(nextButton);
-    nextButton.addEventListener('click', function(e) {
-        slide('next', true, elStr);
-    });
-
-    document.querySelector(elStr).querySelector('.'+DOM.container).append(ivsNavContainer);
+        var prevButton = document.createElement('button');
+        prevButton.classList.add(DOM.navPrev);
+        ivsNavContainer.appendChild(prevButton);
+        prevButton.addEventListener('click', function(e) {
+            slide('prev', true, elStr);
+        });
+    
+        var nextButton = document.createElement('button');
+        nextButton.classList.add(DOM.navNext);
+        ivsNavContainer.appendChild(nextButton);
+        nextButton.addEventListener('click', function(e) {
+            slide('next', true, elStr);
+        });
+    
+        el.querySelector('.'+DOM.container).append(ivsNavContainer);
+    }
 }
 
 function getActiveSlide(elStr) {
@@ -157,74 +167,88 @@ function slide(type = 'next', isButton = false, elStr) {
 function setDots(elStr) {
     var el = document.querySelector(elStr);
     var slideObj = sliderObject[elStr];
-    var ivsDots = document.createElement('div');
-    ivsDots.classList.add(DOM.dots);
-    if (slideObj.direction == 'v') {
-        ivsDots.classList.add(DOM.vertical);
+
+    var ivsDots;
+    if(slideObj.dynamicDOM) {
+        ivsDots = document.createElement('div');
+        ivsDots.classList.add(DOM.dots);
+    } else if(el.querySelector(`.${DOM.container} .${DOM.dots}`)) {
+        ivsDots = el.querySelector(`.${DOM.container} .${DOM.dots}`);
     }
 
-    var ivsDotsContainer = document.createElement('div');
-    ivsDotsContainer.classList.add(DOM.dotsContainer);
-
-    for(var i=0; i<slideObj.slider.count; i++) {
-        var dotsButton = document.createElement('button');
-        dotsButton.classList.add(DOM.dot);
-        if(slideObj.dotNumber) {
-            dotsButton.innerText = (slideObj.rtl ? (slideObj.slider.count-i) : (i+1));
+    if(ivsDots) {
+        if (slideObj.direction == 'v') {
+            ivsDots.classList.add(DOM.vertical);
         }
-
-        ivsDotsContainer.appendChild(dotsButton);
-    }
-    ivsDots.appendChild(ivsDotsContainer);
-    el.querySelector('.'+DOM.container).append(ivsDots);
-
-    var dots = el.querySelectorAll('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.dot);
-    for(var i=0; i<dots.length; i++) {
-        var dot = dots[i];
-        dot.addEventListener('click', function(e) {
-            var index = getIndex(el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children, e.target);
-            setSlide(index, elStr);
-        });
+    
+        var ivsDotsContainer = document.createElement('div');
+        ivsDotsContainer.classList.add(DOM.dotsContainer);
+    
+        for(var i=0; i<slideObj.slider.count; i++) {
+            var dotsButton = document.createElement('button');
+            dotsButton.classList.add(DOM.dot);
+            if(slideObj.dotNumber) {
+                dotsButton.innerText = (slideObj.rtl ? (slideObj.slider.count-i) : (i+1));
+            }
+    
+            ivsDotsContainer.appendChild(dotsButton);
+        }
+        ivsDots.appendChild(ivsDotsContainer);
+        el.querySelector('.'+DOM.container).append(ivsDots);
+    
+        var dots = el.querySelectorAll('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.dot);
+        for(var i=0; i<dots.length; i++) {
+            var dot = dots[i];
+            dot.addEventListener('click', function(e) {
+                var index = getIndex(el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children, e.target);
+                setSlide(index, elStr);
+            });
+        }
     }
 }
 
 function setDot(index, elStr) {
     var el = document.querySelector(elStr);
-    if(el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active)) {
-        el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active).classList.remove(DOM.active);
+    if(el.querySelector('.'+DOM.container+' .'+DOM.dots)) {
+        if(el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active)) {
+            el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer+' .'+DOM.active).classList.remove(DOM.active);
+        }
+        
+        el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children[index].classList.add(DOM.active);
     }
-    
-    el.querySelector('.'+DOM.container+' .'+DOM.dots+' .'+DOM.dotsContainer).children[index].classList.add(DOM.active);
 }
 
 function setIVSElems(elStr) {
     var el = document.querySelector(elStr);
     var slideObj = sliderObject[elStr];
     //Slider özelleştirilmeden önce içerik kopyalanıyor
-    var sliders = el.cloneNode(true);
-    for(var i=0; i<sliders.childElementCount; i++) {
-        var slide = sliders.children[i];
-        slide.classList.add(DOM.rowSlide);
+    var sliders;
+    if(slideObj.dynamicDOM) {
+        sliders = el.cloneNode(true);
+        for(var i=0; i<sliders.childElementCount; i++) {
+            var slide = sliders.children[i];
+            slide.classList.add(DOM.rowSlide);
+        }
+        el.classList.add(DOM.slider);
+
+        //Slider için gerekli olan kısımlar ekleniyor
+        el.innerHTML = '';
+        var ivsContainer = document.createElement('div');
+        ivsContainer.classList.add(DOM.container);
+        el.appendChild(ivsContainer);
+
+        var ivsRow = document.createElement('div');
+        ivsRow.classList.add(DOM.row);
+        
+        ivsContainer.appendChild(ivsRow);
+
+        ivsRow.innerHTML = sliders.innerHTML;
+    } else {
+        sliders = el.querySelector(`.${DOM.container} .${DOM.row}`).cloneNode(true);
     }
-
-    el.classList.add(DOM.slider);
-
-    //Slider için gerekli olan kısımlar ekleniyor
-    el.innerHTML = '';
-    var ivsContainer = document.createElement('div');
-    ivsContainer.classList.add(DOM.container);
-    el.appendChild(ivsContainer);
-
-    var ivsRow = document.createElement('div');
-    ivsRow.classList.add(DOM.row);
-
     setTimeout(()=> {
-        ivsRow.style.transition = slideObj.transition;
+        el.querySelector(`.${DOM.container} .${DOM.row}`).style.transition = slideObj.transition;
     },100);
-    
-    ivsContainer.appendChild(ivsRow);
-
-    ivsRow.innerHTML = sliders.innerHTML;
     return sliders;
 }
 
@@ -273,7 +297,7 @@ function setSlide(index, elStr) {
     }
     setSlideAction(index, elStr);
 
-    if(!slideObj.loop) {
+    if(!slideObj.loop && el.querySelector('.'+DOM.container+' .'+DOM.nav)) {
         var activeSlide = getActiveSlide(elStr);
         if(activeSlide.index >= slideObj.slider.count-1) {
             el.querySelector('.'+DOM.container+' .'+DOM.nav+' .'+DOM.navNext).setAttribute('disabled','disabled');

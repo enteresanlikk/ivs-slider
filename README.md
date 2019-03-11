@@ -19,3 +19,4 @@ spaceBetween|Boolean|(true or false) or (0 or 1)|0
 slidesPerView|Boolean|(true or false) or (0 or 1)|1
 dotNumber|Boolean|(true or false) or (0 or 1)|1
 direction|String|'v' or 'h'|'h'
+dynamicDOM|Boolean|(true or false) or (0 or 1)|1
